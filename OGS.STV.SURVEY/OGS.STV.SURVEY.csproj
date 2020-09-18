@@ -4,4 +4,11 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\Enums\" />
+    <Folder Include="Data\Entities\" />
+    <Folder Include="wwwroot\lib\" />
+    <Folder Include="wwwroot\fonts\" />
+  </ItemGroup>
+
 </Project>
