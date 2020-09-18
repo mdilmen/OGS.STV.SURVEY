@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>OYAK Grup Sigorta : @ViewBag.Title</title>
+    <link href="~/lib/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/font-awesome.min.css" rel="stylesheet" />   
+    <link rel="shortcut icon" href="~/img/oyak.ico">
+</head>
+<body>
+    <header class="container">
+        <nav class="navbar navbar-light navbar-expand-md" style="border-radius:2px; border:1px solid rgba(0,0,0,.125)">
+            <h3 class="navbar-brand"><img src="~/img/oyak_sigorta.png" /></h3>
+
+            <button class="navbar-toggler" data-toggle="collapse" data-target="#theMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div id="theMenu" class="navbar-collapse collapse">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" asp-controller="App" asp-action="Index"><b>Bilgiler</b></a></li>
+                    @*<li class="nav-item"><a class="nav-link" asp-controller="App" asp-action="Contract"><b>Teklif için Talep Edilen Bilgiler</b></a></li>*@
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <section class="container">
+        @*<h2 class="text-center">@ViewBag.Title</h2>*@
+        <div class="mt-5 mt-sm-5"></div>
+        @RenderBody()
+    </section>
+    <div class="container mt-5 mt-sm-5 text-center"><footer>Copyright 2020 OYAK Grup Sigorta ve Reasürans Brokerliği A.Ş.</footer></div>
+    <script src="~/lib/jquery.min.js"></script>
+    <script src="~/lib/bootstrap.min.js"></script>
+
+    @RenderSection("scripts", false)
+</body>
+</html>
