@@ -7,32 +7,32 @@
             <div class="form-group">
                 <p class="text-muted">*Size daha iyi bir hizmet sunabilmek için bilgileriniz OYAK Grup Sigorta tarafından kaydedilecektir.</p>
                 <label asp-for="TCNO">TCNO</label>
-                <input asp-for="TCNO" class="form-control" />
+                <input asp-for="TCNO" class="form-control"  />
                 <span asp-validation-for="TCNO" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="FullName">Ad Soyad</label>
-                <input asp-for="FullName" type="text" class="form-control" />
+                <input asp-for="FullName" type="text" class="form-control"  />
                 <span asp-validation-for="FullName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PhoneNumber">Cep Telefonu</label>
-                <input asp-for="PhoneNumber" type="text" class="form-control" />
+                <input asp-for="PhoneNumber" type="text" class="form-control"  />
                 <span asp-validation-for="PhoneNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Email">Email</label>
-                <input asp-for="Email" type="email" class="form-control" />
+                <input asp-for="Email" type="email" class="form-control"  />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="BirthDate">Doğum Tarihi</label>
-                <input asp-for="BirthDate" type="text" class="form-control datepicker pl-3" placeholder="gg.aa.yyyy" />
+                <input asp-for="BirthDate" type="text" class="form-control datepicker pl-3"   placeholder="gg.aa.yyyy" />
                 <span asp-validation-for="BirthDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="CityId">Poliçeyi kullanmak istediğiniz Şehir</label>
-                <select asp-for="CityId" asp-items="ViewBag.Cities" id="surveyUserCitySelect" class="form-control"></select>
+                <select asp-for="CityId" asp-items="ViewBag.Cities" id="surveyUserCitySelect" class="form-control" ></select>
                 <span asp-validation-for="CityId" class="text-danger"></span>
             </div>
         </form>
