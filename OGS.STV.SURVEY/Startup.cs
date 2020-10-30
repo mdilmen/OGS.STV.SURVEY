@@ -6,8 +6,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using OGS.STV.SURVEY.Data;
+using OGS.STV.SURVEY.Services;
 
 namespace OGS.STV.SURVEY
 {
@@ -15,8 +19,19 @@ namespace OGS.STV.SURVEY
     {
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        private readonly IConfiguration _config;
+
+        public Startup(IConfiguration config)
+        {
+            _config = config;
+        }
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpClient<ValidationHttpClient>();
+            services.AddDbContext<SurveyDbContext>(cfg =>
+            {
+                cfg.UseSqlServer(_config.GetConnectionString("SurveyConnectionString"));
+            });
             services.AddControllersWithViews()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
         }

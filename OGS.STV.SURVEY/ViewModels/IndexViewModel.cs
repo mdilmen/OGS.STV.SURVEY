@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace OGS.STV.SURVEY.ViewModels
 {
-    public class SurveyViewModel
+    public class IndexViewModel
     {
         [Required(AllowEmptyStrings = false, ErrorMessage = "Bu alan gereklidir!")]
         [MinLength(11, ErrorMessage = "en az 11 hane olmalı")]
-        [Remote("IsMember", "ValidationTCNO", HttpMethod = "POST", ErrorMessage = "Tc No is not valid.")]
+        [Remote(action: "IsMember",controller: "ValidationTcNo",HttpMethod ="POST", ErrorMessage = "Tc No is not valid.")]        
         public string TCNO { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Bu alan gereklidir!")]
