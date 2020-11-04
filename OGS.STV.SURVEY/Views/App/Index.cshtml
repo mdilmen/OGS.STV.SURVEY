@@ -8,7 +8,7 @@
     <script src="~/lib/bootstrap-datepicker.tr.min.js"></script>
     <script src="~/js/Index.js"></script>
 }
-<div class="col-12 offset-0 col-sm-12 offset-sm-0 col-md-12 offset-md-0 col-lg-6 offset-lg-3 col-xl-6 offset-xl-3">
+<div class="col-12 offset-0 col-sm-12 offset-sm-0 col-md-12 offset-md-0 col-lg-4 offset-lg-4 col-xl-4 offset-xl-4">
     <div class="card card-body bg-light">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -42,6 +42,52 @@
                 <label asp-for="CityId">Poliçeyi kullanmak istediğiniz Şehir</label>
                 <select asp-for="CityId" asp-items="ViewBag.Cities" id="surveyUserCitySelect" class="form-control"></select>
                 <span asp-validation-for="CityId" class="text-danger"></span>
+            </div>
+            <div class="card">
+                <div id="readInfoBody">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 text-left ">
+                                <div class="form-group">
+                                    <a href='@Url.Content("~/OYAK_Aydınlatma_Metni.pdf")'><i class="fa fa-file-pdf-o"> Aydınlatma Metni için tıklayınız.</i></a>
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="readCheck">
+                                    <p class="text-muted">
+                                        <small>
+                                            <label class="form-check-label" for="readCheck">OYAK Grup Sigorta ve Reasürans Brokerliği A.Ş. Kişisel Verilerin Korunması Ve İşlenmesine İlişkin Müşteri Aydınlatma Metni’ni okudum, kabul ediyorum. </label>
+                                        </small>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div id="approveEmailBody">
+                    <div class="card-body">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="approveEmailCheck">
+                            <p class="text-muted">
+                                <small>
+                                    <label class="form-check-label" for="approveEmailCheck">6563 sayılı Elektronik Ticaretin Düzenlenmesi Hakkında Kanun ve sair mevzuat çerçevesinde, OYAK Grup Sigorta ve Reasürans Brokerliği A.Ş.’den ticari elektronik ileti almak için onay veriyorum.</label>
+                                </small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <select class="selectpicker" multiple data-live-search="true">
+                    <option>Mustard</option>
+                    <option>Ketchup</option>
+                    <option>Relish</option>
+                </select>
+            </div>
+            <div class="form-group mt-2 d-inline-flex float-right">
+                <button type="submit" class="btn btn-primary" id="btnCalculate"><i class="fa fa-save"></i> Kaydet</button>
+                <div class="text-success">@ViewBag.Message</div>
             </div>
         </form>
     </div>

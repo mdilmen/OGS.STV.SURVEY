@@ -1,0 +1,16 @@
+﻿using OGS.STV.SURVEY.Data.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace OGS.STV.SURVEY.Data
+{
+    public interface ISurveyRepository
+    {
+        bool SaveAll();
+        void AddEntity(object model);
+        List<City> GetAllCities();
+    }
+}

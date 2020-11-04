@@ -16,19 +16,8 @@ namespace OGS.STV.SURVEY
         {
             var hostbuilder = CreateHostBuilder(args);
             var host = hostbuilder.Build();
-            RunSeeding(host);
             host.Run();
         }
-        private static void RunSeeding(IHost host)
-        {
-            var scopeFactory = host.Services.GetService<IServiceScopeFactory>();
-            using (var scope = scopeFactory.CreateScope())
-            {
-                //var seeder = scope.ServiceProvider.GetService<SurveySeeder>();
-                //seeder.SeedAsync().Wait();
-            }
-        }
-
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration(SetupConfiguration)

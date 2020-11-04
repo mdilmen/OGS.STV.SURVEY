@@ -4,11 +4,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>OYAK Grup Sigorta : @ViewBag.Title</title>
     <link href="~/lib/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/lib/font-awesome.min.css" rel="stylesheet" />
-    <link rel="shortcut icon" href="~/img/oyak.ico">    
+    <link href="~/lib/font-awesome.min.css" rel="stylesheet" />    
+    <link href="~/lib/bootstrap-select.min.css" rel="stylesheet" />
+
+    <link rel="shortcut icon" href="~/img/oyak.ico">
 </head>
 <body>
-    <header class="container-fluid">
+    <header class="container-fluid p-0">
         <nav class="navbar navbar-light navbar-expand-md" style="border-radius:2px; border:1px solid rgba(0,0,0,.125)">
             <h3 class="navbar-brand"><img src="~/img/oyak_sigorta.png" /></h3>
 
@@ -23,7 +25,7 @@
             </div>
         </nav>
     </header>
-    <section class="container-fluid">
+    <section class="container-fluid p-0">
         @*<h2 class="text-center">@ViewBag.Title</h2>*@
         <div class="mt-1"></div>
         @RenderBody()
@@ -31,7 +33,7 @@
     <div class="container mt-5 mt-sm-1 text-center" ><footer>Copyright 2020 OYAK Grup Sigorta ve Reasürans Brokerliği A.Ş.</footer></div>
     <script src="~/lib/jquery.min.js"></script>
     <script src="~/lib/bootstrap.min.js"></script>
-
+    <script src="~/lib/bootstrap-select.js"></script>
     @RenderSection("scripts", false)
 </body>
 </html>
