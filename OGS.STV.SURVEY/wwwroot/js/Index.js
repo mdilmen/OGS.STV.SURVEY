@@ -12,7 +12,7 @@
         autoclose: "true"
     });
     // Sigorta Seçimi
-    $('.selectpicker').selectpicker();
+    $("#damnselectpicker").select2();
 
     
     //console.log(isshow);

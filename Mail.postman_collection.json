@@ -1,0 +1,80 @@
+{
+	"info": {
+		"_postman_id": "99dae7d2-1a16-48f0-9ddb-c9faa4fd09ba",
+		"name": "Mail",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"UserName\" : \"oyakyatirim_live_wsuser\",\r\n\"Password\" :\"oyak#y4tir1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.relateddigital.com/resta/api/auth/login",
+					"protocol": "https",
+					"host": [
+						"api",
+						"relateddigital",
+						"com"
+					],
+					"path": [
+						"resta",
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostHtml",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "951A68AE396A489F8213A87BEDC802F8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"FromName\": \"Oyak Yatırım\",\r\n\r\n\"FromAddress\": \"oyakyatirim@e.oyakyatirim.com.tr\",\r\n\r\n\"ReplyAddress\": \"bilgi@oyakyatirim.com.tr\",\r\n\r\n\"Subject\": \"Anket\",\r\n\r\n\"HtmlBody\": \"<html><head></head><body>Anket Test 2</body></html>\",\r\n\r\n\"Charset\": \"utf-8\",\r\n\r\n\"ToName\": \"Mustafa Dilmen\",\r\n\r\n\"ToEmailAddress\": \"mustafa.dilmen@oyakyatirim.com.tr\",\r\n\r\n\"PostType\": \"Anket Maili\",\r\n\r\n\"KeyId\": \"\",\r\n\r\n\"CustomParams\": \"\"\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.relateddigital.com/resta/api/post/PostHtml",
+					"protocol": "https",
+					"host": [
+						"api",
+						"relateddigital",
+						"com"
+					],
+					"path": [
+						"resta",
+						"api",
+						"post",
+						"PostHtml"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

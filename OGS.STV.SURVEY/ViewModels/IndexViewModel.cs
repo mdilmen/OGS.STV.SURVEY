@@ -35,5 +35,7 @@ namespace OGS.STV.SURVEY.ViewModels
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Bu alan gereklidir!")]
         public int CityId { get; set; }
+
+        public List<string> Insurances { get; set; }
     }
 }
