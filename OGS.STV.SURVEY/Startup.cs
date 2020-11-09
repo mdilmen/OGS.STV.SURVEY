@@ -34,6 +34,7 @@ namespace OGS.STV.SURVEY
                 cfg.UseSqlServer(_config.GetConnectionString("SurveyConnectionString"));
             });
             services.AddControllersWithViews()
+                .AddRazorRuntimeCompilation()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
         }
 
