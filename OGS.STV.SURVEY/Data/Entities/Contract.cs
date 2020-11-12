@@ -9,9 +9,13 @@ namespace OGS.STV.SURVEY.Data.Entities
 {
     public class Contract
     {
+        public Contract()
+        {
+            ContractInsurances = new List<ContractInsurance>();
+        }
         public int Id { get; set; }
-        public SurveyUser SurveyUser { get; set; }
-        public List<Insurance> Insurances { get; set; }
+        public SurveyUser SurveyUser { get; set; }        
         public MailSendStatus MailSendStatus { get; set; }
+        public List<ContractInsurance> ContractInsurances { get; set; }
     }
 }

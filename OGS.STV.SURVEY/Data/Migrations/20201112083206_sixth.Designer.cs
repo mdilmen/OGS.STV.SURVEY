@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OGS.STV.SURVEY.Data;
 
 namespace OGS.STV.SURVEY.Data.Migrations
 {
     [DbContext(typeof(SurveyDbContext))]
-    partial class SurveyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201112083206_sixth")]
+    partial class sixth
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -558,17 +560,15 @@ namespace OGS.STV.SURVEY.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ContractId")
+                    b.Property<int>("ContractId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("InsuranceId")
+                    b.Property<int>("InsuranceId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ContractId");
-
-                    b.HasIndex("InsuranceId");
 
                     b.ToTable("ContractInsurances");
                 });
@@ -706,13 +706,11 @@ namespace OGS.STV.SURVEY.Data.Migrations
 
             modelBuilder.Entity("OGS.STV.SURVEY.Data.Entities.ContractInsurance", b =>
                 {
-                    b.HasOne("OGS.STV.SURVEY.Data.Entities.Contract", "Contract")
+                    b.HasOne("OGS.STV.SURVEY.Data.Entities.Contract", null)
                         .WithMany("ContractInsurances")
-                        .HasForeignKey("ContractId");
-
-                    b.HasOne("OGS.STV.SURVEY.Data.Entities.Insurance", "Insurance")
-                        .WithMany()
-                        .HasForeignKey("InsuranceId");
+                        .HasForeignKey("ContractId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("OGS.STV.SURVEY.Data.Entities.SurveyUser", b =>

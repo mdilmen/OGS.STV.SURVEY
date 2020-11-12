@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OGS.STV.SURVEY.Data;
 
 namespace OGS.STV.SURVEY.Data.Migrations
 {
     [DbContext(typeof(SurveyDbContext))]
-    partial class SurveyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201111140615_Second")]
+    partial class Second
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -551,7 +553,7 @@ namespace OGS.STV.SURVEY.Data.Migrations
                     b.ToTable("Contracts");
                 });
 
-            modelBuilder.Entity("OGS.STV.SURVEY.Data.Entities.ContractInsurance", b =>
+            modelBuilder.Entity("OGS.STV.SURVEY.Data.Entities.Insurance", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -561,25 +563,6 @@ namespace OGS.STV.SURVEY.Data.Migrations
                     b.Property<int?>("ContractId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("InsuranceId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ContractId");
-
-                    b.HasIndex("InsuranceId");
-
-                    b.ToTable("ContractInsurances");
-                });
-
-            modelBuilder.Entity("OGS.STV.SURVEY.Data.Entities.Insurance", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
                     b.Property<int>("InsuranceOrder")
                         .HasColumnType("int");
 
@@ -587,6 +570,8 @@ namespace OGS.STV.SURVEY.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ContractId");
 
                     b.ToTable("Insurances");
 
@@ -694,7 +679,7 @@ namespace OGS.STV.SURVEY.Data.Migrations
 
                     b.HasIndex("CityId");
 
-                    b.ToTable("SurveyUsers");
+                    b.ToTable("SurveyUser");
                 });
 
             modelBuilder.Entity("OGS.STV.SURVEY.Data.Entities.Contract", b =>
@@ -704,15 +689,11 @@ namespace OGS.STV.SURVEY.Data.Migrations
                         .HasForeignKey("SurveyUserId");
                 });
 
-            modelBuilder.Entity("OGS.STV.SURVEY.Data.Entities.ContractInsurance", b =>
+            modelBuilder.Entity("OGS.STV.SURVEY.Data.Entities.Insurance", b =>
                 {
-                    b.HasOne("OGS.STV.SURVEY.Data.Entities.Contract", "Contract")
-                        .WithMany("ContractInsurances")
+                    b.HasOne("OGS.STV.SURVEY.Data.Entities.Contract", null)
+                        .WithMany("Insurances")
                         .HasForeignKey("ContractId");
-
-                    b.HasOne("OGS.STV.SURVEY.Data.Entities.Insurance", "Insurance")
-                        .WithMany()
-                        .HasForeignKey("InsuranceId");
                 });
 
             modelBuilder.Entity("OGS.STV.SURVEY.Data.Entities.SurveyUser", b =>

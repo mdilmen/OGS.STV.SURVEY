@@ -28,6 +28,8 @@ namespace OGS.STV.SURVEY
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpClient<ValidationHttpClient>();
+            services.AddHttpClient<MailHttpClient>();
+            services.AddScoped<IMailService, MailService>();
             services.AddScoped<ISurveyRepository, SurveyRepository>();
             services.AddDbContext<SurveyDbContext>(cfg =>
             {

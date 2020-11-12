@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace OGS.STV.SURVEY.ViewModels
 {
-    public class IndexViewModel
+    public class ContractViewModel
     {
         [Required(AllowEmptyStrings = false, ErrorMessage = "Bu alan gereklidir!")]
         [MinLength(11, ErrorMessage = "en az 11 hane olmalı")]
-        [Remote(action: "IsMember",controller: "ValidationTcNo",HttpMethod ="POST", ErrorMessage = "Tc No is not valid.")]        
+        //[Remote(action: "IsMember",controller: "ValidationTcNo",HttpMethod ="POST", ErrorMessage = "Tc No is not valid.")]        
         public string TCNO { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Bu alan gereklidir!")]
@@ -36,6 +36,7 @@ namespace OGS.STV.SURVEY.ViewModels
         [Required(AllowEmptyStrings = false, ErrorMessage = "Bu alan gereklidir!")]
         public int CityId { get; set; }
 
-        public List<string> Insurances { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Bu alan gereklidir!")]
+        public List<int> Insurances { get; set; }
     }
 }

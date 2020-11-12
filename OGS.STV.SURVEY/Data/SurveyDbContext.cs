@@ -15,11 +15,31 @@ namespace OGS.STV.SURVEY.Data
 
         }
         public DbSet<City> Cities { get; set; }
+        public DbSet<Insurance> Insurances { get; set; }
+        public DbSet<Contract> Contracts { get; set; }
+        public DbSet<SurveyUser> SurveyUsers { get; set; }
+        public DbSet<ContractInsurance> ContractInsurances { get; set; }
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             //Database.EnsureCreated();
-
+            modelBuilder.Entity<Insurance>()
+                .HasData(
+                    new Insurance { Id =1,InsuranceOrder=1,Name= "Kredi Hayat Sigortaları" },
+                    new Insurance { Id =2,InsuranceOrder=2,Name= "Eğitim Sigortaları" },
+                    new Insurance { Id =3,InsuranceOrder=3,Name= "Diğer hayat sigortaları / Ferdi Kaza ürünleri" },
+                    new Insurance { Id =4,InsuranceOrder=4,Name= "Konut Sigortaları " },
+                    new Insurance { Id =5,InsuranceOrder=5,Name= "Kasko ve Trafik Sigortaları" },
+                    new Insurance { Id =6,InsuranceOrder=6,Name= "TSS (Tamamlayıcı Sağlık Sigortaları)" },
+                    new Insurance { Id =7,InsuranceOrder=7,Name= "ÖSS (Özel Sağlık Sigortaları)" },
+                    new Insurance { Id =8,InsuranceOrder=8,Name= "Seyahat Sigortaları" },
+                    new Insurance { Id =9,InsuranceOrder=9,Name= "Eşyam Sigortası" },
+                    new Insurance { Id =10,InsuranceOrder=10,Name= "KOBİ Poliçeleri" },
+                    new Insurance { Id =11,InsuranceOrder=11,Name= "YSS (Yabancılar Sağlık Sigortaları)" },
+                    new Insurance { Id =12,InsuranceOrder=12,Name= "BES (Bireysel Emeklilik)" }                    
+                );
             modelBuilder.Entity<City>()
                 .HasData(
                     new City { Id = 101, CityOrder = 1, Name = "ADANA" },
