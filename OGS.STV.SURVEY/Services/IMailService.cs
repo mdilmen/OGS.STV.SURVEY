@@ -1,4 +1,5 @@
-﻿using OGS.STV.SURVEY.Http;
+﻿using OGS.STV.SURVEY.Data.Entities;
+using OGS.STV.SURVEY.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,6 @@ namespace OGS.STV.SURVEY.Services
 {
     public interface IMailService
     {
-        Task<bool> SendMail(CancellationToken cancellationToken, MailRequestModel mailRequestModel);
+        Task<bool> SendMail(CancellationToken cancellationToken, MailRequestModel mailRequestModel, Contract contract);
     }
 }

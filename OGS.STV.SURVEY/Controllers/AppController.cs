@@ -88,7 +88,7 @@ namespace OGS.STV.SURVEY.Controllers
                 _repository.AddEntity(contract);
 
                 _repository.SaveAll();
-                _mailService.SendMail(_cancellationTokenSource.Token, new Http.MailRequestModel());
+                _mailService.SendMail(_cancellationTokenSource.Token, new Http.MailRequestModel(), contract);
                 return RedirectToAction("Success", "App");
             }
             return View();

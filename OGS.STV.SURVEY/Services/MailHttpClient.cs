@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using OGS.STV.SURVEY.Http;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace OGS.STV.SURVEY.Services
         public MailHttpClient(HttpClient client)
         {
             _client = client;
-            _client.BaseAddress = new Uri("https://api.relateddigital.com/resta");
+            _client.BaseAddress = new Uri("https://api.relateddigital.com/resta/api");
             _client.Timeout = new TimeSpan(0, 0, 30);
             _client.DefaultRequestHeaders.Clear();
             _client.DefaultRequestHeaders.Accept.Add(
@@ -29,15 +30,11 @@ namespace OGS.STV.SURVEY.Services
         {
             try
             {
-                var encodedContent = new FormUrlEncodedContent(new List<KeyValuePair<string, string>>{
-                new KeyValuePair<string, string>("UserName", "oyakyatirim_live_wsuser"),
-                new KeyValuePair<string, string>("Password", "oyak#y4tir1")
-                });
-                var request = new HttpRequestMessage(HttpMethod.Post, "api/auth/login")
-                {
-                    Content = encodedContent
-                };
-                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/x-www-form-urlencoded"));
+                var request = new HttpRequestMessage(HttpMethod.Post, "api/auth/login");
+                var serializedRequest = JsonConvert.SerializeObject(new TokenRequestModel() { UserName = "oyakyatirim_live_wsuser", Password = "oyak#y4tir1" });
+                //request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));                
+                request.Content = new StringContent(serializedRequest);
+                request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
                 var response = await _client.SendAsync(request);
                 response.EnsureSuccessStatusCode();
@@ -56,10 +53,10 @@ namespace OGS.STV.SURVEY.Services
             //InvoiceResponseModel invoice = new InvoiceResponseModel();
             var serializedMailRequest = JsonConvert.SerializeObject(mailRequest);
 
-            var request = new HttpRequestMessage(HttpMethod.Post, "post/PostHtml");
+            var request = new HttpRequestMessage(HttpMethod.Post, "api/post/PostHtml");
 
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", authToken);
+            request.Headers.Authorization = new AuthenticationHeaderValue(authToken);
             request.Content = new StringContent(serializedMailRequest);
             request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
