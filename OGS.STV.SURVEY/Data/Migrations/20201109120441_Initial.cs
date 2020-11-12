@@ -20,12 +20,28 @@ namespace OGS.STV.SURVEY.Data.Migrations
                     table.PrimaryKey("PK_Cities", x => x.Id);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Insurances",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true),
+                    InsuranceOrder = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Insurances", x => x.Id);
+                });
+
             migrationBuilder.InsertData(
                 table: "Cities",
                 columns: new[] { "Id", "CityOrder", "Name" },
                 values: new object[,]
                 {
                     { 101, 1, "ADANA" },
+                    { 61, 61, "NEVŞEHİR" },
+                    { 60, 60, "MUŞ" },
                     { 59, 59, "MUĞLA" },
                     { 58, 58, "MERSİN" },
                     { 57, 57, "MARDİN" },
@@ -33,19 +49,20 @@ namespace OGS.STV.SURVEY.Data.Migrations
                     { 55, 55, "MALATYA" },
                     { 54, 54, "KÜTAHYA" },
                     { 53, 53, "KONYA" },
-                    { 60, 60, "MUŞ" },
                     { 52, 52, "KOCAELİ" },
+                    { 51, 51, "KİLİS" },
                     { 50, 50, "KIRŞEHİR" },
                     { 49, 49, "KIRKLARELİ" },
                     { 48, 48, "KIRIKKALE" },
-                    { 47, 47, "KAYSERİ" },
                     { 46, 46, "KASTAMONU" },
                     { 45, 45, "KARS" },
                     { 44, 44, "KARAMAN" },
-                    { 51, 51, "KİLİS" },
-                    { 61, 61, "NEVŞEHİR" },
                     { 62, 62, "NİĞDE" },
+                    { 43, 43, "KARABÜK" },
                     { 63, 63, "ORDU" },
+                    { 65, 65, "RİZE" },
+                    { 9, 82, "Diğer" },
+                    { 81, 81, "ZONGULDAK" },
                     { 80, 80, "YOZGAT" },
                     { 79, 79, "YALOVA" },
                     { 7, 78, "VAN" },
@@ -61,15 +78,13 @@ namespace OGS.STV.SURVEY.Data.Migrations
                     { 68, 68, "SİİRT" },
                     { 67, 67, "SAMSUN" },
                     { 66, 66, "SAKARYA" },
-                    { 65, 65, "RİZE" },
                     { 64, 64, "OSMANİYE" },
-                    { 43, 43, "KARABÜK" },
                     { 42, 42, "KAHRAMANMARAŞ" },
-                    { 3, 41, "İZMİR" },
+                    { 47, 47, "KAYSERİ" },
                     { 1, 40, "İSTANBUL" },
                     { 18, 18, "BİTLİS" },
                     { 17, 17, "BİNGÖL" },
-                    { 16, 16, "BİLECİK" },
+                    { 3, 41, "İZMİR" },
                     { 15, 15, "BAYBURT" },
                     { 14, 14, "BATMAN" },
                     { 13, 13, "BARTIN" },
@@ -85,18 +100,18 @@ namespace OGS.STV.SURVEY.Data.Migrations
                     { 103, 3, "AFYONKARAHİSAR" },
                     { 102, 2, "ADIYAMAN" },
                     { 19, 19, "BOLU" },
-                    { 81, 81, "ZONGULDAK" },
                     { 20, 20, "BURDUR" },
+                    { 16, 16, "BİLECİK" },
                     { 22, 22, "ÇANAKKALE" },
                     { 39, 39, "ISPARTA" },
                     { 38, 38, "IĞDIR" },
                     { 6, 37, "HATAY" },
+                    { 21, 21, "BURSA" },
                     { 36, 36, "HAKKARİ" },
                     { 35, 35, "GÜMÜŞHANE" },
                     { 34, 34, "GİRESUN" },
-                    { 33, 33, "GAZİANTEP" },
                     { 32, 32, "ESKİŞEHİR" },
-                    { 31, 31, "ERZURUM" },
+                    { 33, 33, "GAZİANTEP" },
                     { 30, 30, "ERZİNCAN" },
                     { 29, 29, "ELAZIĞ" },
                     { 28, 28, "EDİRNE" },
@@ -105,8 +120,26 @@ namespace OGS.STV.SURVEY.Data.Migrations
                     { 25, 25, "DENİZLİ" },
                     { 24, 24, "ÇORUM" },
                     { 23, 23, "ÇANKIRI" },
-                    { 21, 21, "BURSA" },
-                    { 9, 82, "Diğer" }
+                    { 31, 31, "ERZURUM" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Insurances",
+                columns: new[] { "Id", "InsuranceOrder", "Name" },
+                values: new object[,]
+                {
+                    { 7, 7, "ÖSS (Özel Sağlık Sigortaları)" },
+                    { 10, 10, "KOBİ Poliçeleri" },
+                    { 9, 9, "Eşyam Sigortası" },
+                    { 8, 8, "Seyahat Sigortaları" },
+                    { 6, 6, "TSS (Tamamlayıcı Sağlık Sigortaları)" },
+                    { 11, 11, "YSS (Yabancılar Sağlık Sigortaları)" },
+                    { 4, 4, "Konut Sigortaları " },
+                    { 3, 3, "Diğer hayat sigortaları / Ferdi Kaza ürünleri" },
+                    { 2, 2, "Eğitim Sigortaları" },
+                    { 1, 1, "Kredi Hayat Sigortaları" },
+                    { 5, 5, "Kasko ve Trafik Sigortaları" },
+                    { 12, 12, "BES (Bireysel Emeklilik)" }
                 });
         }
 
@@ -114,6 +147,9 @@ namespace OGS.STV.SURVEY.Data.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Cities");
+
+            migrationBuilder.DropTable(
+                name: "Insurances");
         }
     }
 }

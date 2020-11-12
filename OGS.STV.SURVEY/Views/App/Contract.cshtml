@@ -1,0 +1,95 @@
+﻿@model OGS.STV.SURVEY.ViewModels.ContractViewModel
+@section scripts
+{
+    <script src="~/lib/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery.validate.unobtrusive.min.js"></script>
+    <link href="~/lib/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <script src="~/lib/bootstrap-datepicker.min.js"></script>
+    <script src="~/lib/bootstrap-datepicker.tr.min.js"></script>
+    <link href="~/lib/select2.min.css" rel="stylesheet" />
+    <script src="~/lib/select2.min.js"></script>
+    <script src="~/lib/tr.js"></script>
+    <script src="~/js/Index.js"></script>
+}
+<div class="col-12 offset-0 col-sm-12 offset-sm-0 col-md-12 offset-md-0 col-lg-4 offset-lg-4 col-xl-4 offset-xl-4">
+    <div class="card card-body bg-light p-2">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                @*<p class="text-muted">*Size daha iyi bir hizmet sunabilmek için bilgileriniz OYAK Grup Sigorta tarafından kaydedilecektir.</p>*@
+                <label asp-for="TCNO">TCNO</label>
+                <input asp-for="TCNO" class="form-control" />
+                <span asp-validation-for="TCNO" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FullName">Ad Soyad</label>
+                <input asp-for="FullName" type="text" class="form-control" />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNumber">Cep Telefonu</label>
+                <input asp-for="PhoneNumber" type="text" class="form-control" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email">Email</label>
+                <input asp-for="Email" type="email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BirthDate">Doğum Tarihi</label>
+                <input asp-for="BirthDate" type="text" class="form-control datepicker pl-3" placeholder="gg.aa.yyyy" />
+                <span asp-validation-for="BirthDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CityId">Poliçeyi kullanmak istediğiniz Şehir</label>
+                <select asp-for="CityId" asp-items="ViewBag.Cities" id="surveyUserCitySelect" class="form-control"></select>
+                <span asp-validation-for="CityId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Insurances">Sigortalar </label>
+                <select asp-for="Insurances" class="form-control" asp-items="ViewBag.Insurances" id="damnselectpicker" multiple data-placeholder="Sigorta Seçiniz."></select>
+                <span asp-validation-for="Insurances" class="text-danger"></span>                
+            </div>
+            <div class="card mt-2" >
+                <div id="readInfoBody">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 text-left ">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="readCheck">
+                                    <p class="text-muted">
+                                        <small>
+                                            <label class="form-check-label" for="readCheck">OYAK Grup Sigorta ve Reasürans Brokerliği A.Ş. Kişisel Verilerin Korunması Ve İşlenmesine İlişkin Müşteri Aydınlatma Metni’ni okudum, kabul ediyorum. </label>
+                                        </small>
+                                    </p>
+                                </div>
+                                <div class="form-group p-2">
+                                    <a href='@Url.Content("~/OYAK_Aydınlatma_Metni.pdf")'><i class="fa fa-file-pdf-o"> Aydınlatma Metni için tıklayınız.</i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div id="approveEmailBody">
+                    <div class="card-body">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="approveEmailCheck">
+                            <p class="text-muted">
+                                <small>
+                                    <label class="form-check-label" for="approveEmailCheck">6563 sayılı Elektronik Ticaretin Düzenlenmesi Hakkında Kanun ve sair mevzuat çerçevesinde, OYAK Grup Sigorta ve Reasürans Brokerliği A.Ş.’den ticari elektronik ileti almak için onay veriyorum.</label>
+                                </small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mt-2 d-inline-flex float-right">
+                <button type="submit" class="btn btn-primary" id="btnCalculate"><i class="fa fa-save"></i> Kaydet</button>
+                <div class="text-success">@ViewBag.Message</div>
+            </div>
+        </form>
+    </div>
+</div>

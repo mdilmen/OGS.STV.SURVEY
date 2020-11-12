@@ -12,5 +12,9 @@ namespace OGS.STV.SURVEY.Data
         bool SaveAll();
         void AddEntity(object model);
         List<City> GetAllCities();
+        City GetCity(int id);
+        List<Insurance> GetAllInsurances();
+        List<Insurance> GetInsurances(List<int> insuranceIdList);
+
     }
 }

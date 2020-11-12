@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,7 +27,22 @@ namespace OGS.STV.SURVEY.Data
 
         public List<City> GetAllCities()
         {
-            return _context.Cities.ToList();
+            return _context.Cities.OrderBy(c => c.CityOrder).ToList();
+        }
+
+        public List<Insurance> GetAllInsurances()
+        {
+            return _context.Insurances.OrderBy(i => i.InsuranceOrder).ToList();
+        }
+
+        public City GetCity(int id)
+        {
+            return _context.Cities.Where(c => c.Id == id).FirstOrDefault();
+        }
+
+        public List<Insurance> GetInsurances(List<int> insuranceIdList)
+        {
+            return _context.Insurances.Where(i => insuranceIdList.Contains(i.Id)).OrderBy(i=> i.InsuranceOrder).ToList();
         }
     }
 }
