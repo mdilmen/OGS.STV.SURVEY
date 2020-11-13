@@ -33,7 +33,7 @@ namespace OGS.STV.SURVEY.Services
             {                
                 subject += item.Insurance.Name + ", ";
             }
-            subject.TrimEnd(',');
+            subject = subject[0..^2];
 
             //SubjectHtml
             string subjectHtml = "";

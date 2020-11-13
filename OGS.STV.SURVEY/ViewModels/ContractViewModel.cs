@@ -11,12 +11,12 @@ namespace OGS.STV.SURVEY.ViewModels
     public class ContractViewModel
     {
         [Required(AllowEmptyStrings = false, ErrorMessage = "Bu alan gereklidir!")]
-        [MinLength(11, ErrorMessage = "en az 11 hane olmalı")]
+        [MinLength(11, ErrorMessage = "En az 11 hane olmalı")]
         //[Remote(action: "IsMember",controller: "ValidationTcNo",HttpMethod ="POST", ErrorMessage = "Tc No is not valid.")]        
         public string TCNO { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Bu alan gereklidir!")]
-        [MinLength(5, ErrorMessage = "en az 5 hane olmalı")]
+        [MinLength(5, ErrorMessage = "En az 5 karakter olmalı")]
         public string FullName { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Bu alan gereklidir!")]
@@ -30,7 +30,7 @@ namespace OGS.STV.SURVEY.ViewModels
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd.MM.yyyy}")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Bu alan gereklidir!")]
-        [Remote("IsValidDateOfBirth", "Validation", HttpMethod = "POST", ErrorMessage = "Please provide a valid date of birth.")]
+        [Remote("IsValidDateOfBirth", "Validation", HttpMethod = "POST", ErrorMessage = "Lütfen geçerli bir doğum tarihi giriniz.")]
         public DateTime BirthDate { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Bu alan gereklidir!")]
