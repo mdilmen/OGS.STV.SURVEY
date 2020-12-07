@@ -9,6 +9,8 @@
     <link href="~/lib/select2.min.css" rel="stylesheet" />
     <script src="~/lib/select2.min.js"></script>
     <script src="~/lib/tr.js"></script>
+    <script src="~/lib/jquery.inputmask.js"></script>
+    <script src="~/lib/jquery-input-mask-phone-number.min.js"></script>
     <script src="~/js/Index.js"></script>
 }
 <div class="col-12 offset-0 col-sm-12 offset-sm-0 col-md-12 offset-md-0 col-lg-4 offset-lg-4 col-xl-4 offset-xl-4">
@@ -16,10 +18,11 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group mb-1">
-                @*<p class="text-muted">*Size daha iyi bir hizmet sunabilmek için bilgileriniz OYAK Grup Sigorta tarafından kaydedilecektir.</p>*@
                 <label asp-for="CardNo">Şişli Terakki Kart No</label>
                 <input asp-for="CardNo" class="form-control" />
+                <span class="text-muted small">ŞTL Kart numaranızı <a href="http://www.stlmed.org" target="_blank">www.stlmed.org</a> adresinden üye girişi yaparak öğrenebilirsiniz.</span><br />
                 <span asp-validation-for="CardNo" class="text-danger"></span>
+
             </div>
             <div class="form-group mb-1">
                 @*<p class="text-muted">*Size daha iyi bir hizmet sunabilmek için bilgileriniz OYAK Grup Sigorta tarafından kaydedilecektir.</p>*@
@@ -97,5 +100,35 @@
                 <div class="text-success">@ViewBag.Message</div>
             </div>
         </form>
+    </div>
+</div>
+<!-- Modal Info-->
+<div class="modal" id="infoModal" role="dialog" aria-labelledby="infoModal" aria-hidden="true">
+    <div class="modal-dialog" role="document" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Anket ile ilgili</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">                
+                <p class="text-muted">
+                    <ul>
+                        <li class="mb-2">
+                            Sizlere özel sunulan <b>KREDİM GÜVENDE</b> ürünüyle %40 ‘lara varan daha uygun primlerle,
+                            kredi hayat poliçesine sahip olabileceksiniz.
+                            Devam etmekte olan ve kullanılacak yeni krediler için Sigorta primi kredi tutarına,
+                            kredi faiz oranına ve kredi süresine göre hesaplanarak mevcut bankadaki poliçenizden para iadesi alabilirsiniz.
+                        </li>
+                        <li class="mb-2">%15’e varan <b>Kasko</b> Poliçelerindeki indirimle birlikte 50 TL Oyak grubu iştiraki Total’den yakıt hediyemiz olacaktır.</li>
+                        <li class="mb-2"><b>Sağlık poliçelerimizde</b> %10’a varan indirimlerimiz bulunmaktadır.</li>
+                    </ul>
+                </p>                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tamam</button>
+            </div>
+        </div>
     </div>
 </div>

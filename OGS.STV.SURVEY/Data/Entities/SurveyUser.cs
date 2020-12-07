@@ -16,5 +16,6 @@ namespace OGS.STV.SURVEY.Data.Entities
         public string Email { get; set; }
         public string Phone { get; set; }
         public City City { get; set; }
+        public string CardNO { get; set; }
     }
 }

@@ -17,7 +17,7 @@ namespace OGS.STV.SURVEY.Controllers
 {
     public class AppController : Controller
     {
-        private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
+        private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource(10000);
         private readonly ISurveyRepository _repository;
         private readonly IMailService _mailService;
 
@@ -69,6 +69,7 @@ namespace OGS.STV.SURVEY.Controllers
                     BirthDate = model.BirthDate,
                     Phone = model.PhoneNumber,
                     City = _repository.GetCity((int)model.CityId),
+                    CardNO = model.CardNo
                 };
                 Contract contract = new Contract()
                 {
@@ -85,10 +86,15 @@ namespace OGS.STV.SURVEY.Controllers
                     };
                     contract.ContractInsurances.Add(contractInsurance);
                 }
+                
+                bool mailSend = _mailService.SendMailASync(_cancellationTokenSource.Token, new Http.MailRequestModel(), contract).GetAwaiter().GetResult();
+
                 _repository.AddEntity(contract);
 
                 _repository.SaveAll();
-                _mailService.SendMail(_cancellationTokenSource.Token, new Http.MailRequestModel(), contract);
+
+                contract.MailSendStatus = mailSend ? MailSendStatus.MailSend : MailSendStatus.MailNotSend;
+                
                 return RedirectToAction("Success", "App");
             }
             return View();

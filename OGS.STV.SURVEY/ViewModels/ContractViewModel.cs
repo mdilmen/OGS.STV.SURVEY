@@ -10,15 +10,18 @@ namespace OGS.STV.SURVEY.ViewModels
 {
     public class ContractViewModel
     {
+        [RegularExpression(@"^(?=.{16,16}$)(?!.*?(.)\1{7})[A-Za-z0-9]+$", ErrorMessage = "Lütfen geçerli bir Kart No giriniz!")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Bu alan gereklidir!")]
-        [MinLength(5, ErrorMessage = "En az 5 hane olmalı")]
+        [MinLength(16, ErrorMessage = "Kart No 16 hane olmalı")]
+        [MaxLength(16, ErrorMessage = "Kart No 16 hane olmalı")]
+        
         [Remote(action: "IsValidCardNo",controller: "ValidationCardNo",HttpMethod ="POST", ErrorMessage = "Card No is not valid.")]        
         public string CardNo { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Bu alan gereklidir!")]
         [RegularExpression(@"^(?=.{11,11}$)(?!.*?(.)\1{5})[A-Za-z0-9]+$", ErrorMessage = "Lütfen geçerli bir Tc No giriniz!")]
-        [MinLength(11, ErrorMessage = "En az 11 hane olmalı")]
-        [MaxLength(11, ErrorMessage = "En fazla 11 hane olmalı")]
+        [MinLength(11, ErrorMessage = "Tc No 11 hane olmalı")]
+        [MaxLength(11, ErrorMessage = "Tc No 11 hane olmalı")]
         public string TCNO { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Bu alan gereklidir!")]

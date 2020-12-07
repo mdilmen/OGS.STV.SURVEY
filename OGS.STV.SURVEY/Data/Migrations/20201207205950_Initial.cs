@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace OGS.STV.SURVEY.Data.Migrations
 {
@@ -32,6 +33,77 @@ namespace OGS.STV.SURVEY.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Insurances", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SurveyUsers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TCNO = table.Column<string>(nullable: true),
+                    FullName = table.Column<string>(nullable: true),
+                    BirthDate = table.Column<DateTime>(nullable: false),
+                    Email = table.Column<string>(nullable: true),
+                    Phone = table.Column<string>(nullable: true),
+                    CityId = table.Column<int>(nullable: true),
+                    CardNO = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SurveyUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SurveyUsers_Cities_CityId",
+                        column: x => x.CityId,
+                        principalTable: "Cities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Contracts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SurveyUserId = table.Column<int>(nullable: true),
+                    MailSendStatus = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Contracts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Contracts_SurveyUsers_SurveyUserId",
+                        column: x => x.SurveyUserId,
+                        principalTable: "SurveyUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ContractInsurances",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ContractId = table.Column<int>(nullable: true),
+                    InsuranceId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ContractInsurances", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ContractInsurances_Contracts_ContractId",
+                        column: x => x.ContractId,
+                        principalTable: "Contracts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ContractInsurances_Insurances_InsuranceId",
+                        column: x => x.InsuranceId,
+                        principalTable: "Insurances",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.InsertData(
@@ -141,15 +213,44 @@ namespace OGS.STV.SURVEY.Data.Migrations
                     { 5, 5, "Kasko ve Trafik Sigortaları" },
                     { 12, 12, "BES (Bireysel Emeklilik)" }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ContractInsurances_ContractId",
+                table: "ContractInsurances",
+                column: "ContractId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ContractInsurances_InsuranceId",
+                table: "ContractInsurances",
+                column: "InsuranceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Contracts_SurveyUserId",
+                table: "Contracts",
+                column: "SurveyUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SurveyUsers_CityId",
+                table: "SurveyUsers",
+                column: "CityId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Cities");
+                name: "ContractInsurances");
+
+            migrationBuilder.DropTable(
+                name: "Contracts");
 
             migrationBuilder.DropTable(
                 name: "Insurances");
+
+            migrationBuilder.DropTable(
+                name: "SurveyUsers");
+
+            migrationBuilder.DropTable(
+                name: "Cities");
         }
     }
 }

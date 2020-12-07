@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis.Diagnostics;
+using Microsoft.Extensions.Configuration;
 using OGS.STV.SURVEY.Data.Entities;
 using OGS.STV.SURVEY.Http;
 using System;
@@ -13,16 +14,27 @@ namespace OGS.STV.SURVEY.Services
     public class MailService : IMailService
     {
         private readonly MailHttpClient _client;
+        private readonly IConfiguration _config;
 
-        public MailService(MailHttpClient client)
+        public MailService(MailHttpClient client, IConfiguration config)
         {
             _client = client;
+            _config = config;
         }
-        public Task<bool> SendMail(CancellationToken cancellationToken, MailRequestModel mailRequestModel, Contract contract)
+        public async Task<bool> SendMailASync(CancellationToken cancellationToken, MailRequestModel mailRequestModel, Contract contract)
         {
-            var token = _client.GetToken().GetAwaiter().GetResult();
-            var result = _client.PostSendMail(cancellationToken, token, CreateMailRequest(contract));
-            return result;
+            //Thread.Sleep(10000);
+            try
+            {
+                var token = await _client.GetToken();
+                var result = await _client.PostSendMail(cancellationToken, token, CreateMailRequest(contract));
+                return result;
+            }
+            catch (Exception)
+            {
+                // do nothing 
+                return false;
+            }
         }
         public MailRequestModel CreateMailRequest(Contract contract)
         {
@@ -46,7 +58,8 @@ namespace OGS.STV.SURVEY.Services
             // HtmlBody
             string body = "";
             body = "<html><head></head><body><h4>"
-                + contract.SurveyUser.FullName + "</h4>"
+                + contract.SurveyUser.FullName + "</h4>"                
+                + contract.SurveyUser.CardNO + "</br>"
                 + contract.SurveyUser.TCNO + "</br>"
                 + contract.SurveyUser.BirthDate.ToShortDateString() + "</br>"
                 + contract.SurveyUser.City.Name + "</br>"
@@ -56,29 +69,27 @@ namespace OGS.STV.SURVEY.Services
                 + "</body></html>";
             MailRequestModel mailRequestModel = new MailRequestModel()
             {
-                FromName = "Oyak Yatırım",
+                FromName = _config["ContactString:FromName"],
 
-                FromAddress = "oyakyatirim@e.oyakyatirim.com.tr",
+                FromAddress = _config["ContactString:FromAddress"],
 
-                ReplyAddress = "bilgi@oyakyatirim.com.tr",
+                ReplyAddress = _config["ContactString:ReplyAddress"],
 
                 Subject = subject,
 
                 HtmlBody = body,
 
-                Charset = "utf-8",
+                Charset = _config["ContactString:Charset"],
 
-                ToName = "Derya Uçunoğlu",
+                ToName = _config["ContactString:ToName"],
 
-                ToEmailAddress = "mustafa.dilmen@oyakyatirim.com.tr",
-                //ToEmailAddress = "derya.ucunoglu@oyakgrupsigorta.com",
-                //ToEmailAddress = "sisliterakki@oyakgrupsigorta.com",                
+                ToEmailAddress = _config["ContactString:ToEmailAddress"],
+           
+                PostType = _config["ContactString:PostType"],
 
-                PostType = "Anket Maili",
+                KeyId = _config["ContactString:KeyId"],
 
-                KeyId = "",
-
-                CustomParams = ""
+                CustomParams = _config["ContactString:CustomParams"],
             };
             return mailRequestModel;
         }

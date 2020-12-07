@@ -1,4 +1,7 @@
 ﻿$(document).ready(function () {
+    // Show Info Modal
+    $('#infoModal').modal("show");
+
     // Phone Number
     $('#Email').inputmask("email");
 
@@ -18,6 +21,14 @@
         autoclose: "true"
     });
     // Sigorta Seçimi
+    function hideSelect2Keyboard(e) {
+        $('.select2-search input, :focus,input').prop('focus', false).blur();
+    }
+    $("#damnselectpicker").select2().on("select2-open", hideSelect2Keyboard);
+
+    $("#damnselectpicker").select2().on("select2-close", function () {
+        setTimeout(hideSelect2Keyboard, 50);
+    });
     $("#damnselectpicker").select2({
         // your options here
     }).on('change', function () {

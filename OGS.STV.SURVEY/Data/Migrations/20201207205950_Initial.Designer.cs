@@ -10,8 +10,8 @@ using OGS.STV.SURVEY.Data;
 namespace OGS.STV.SURVEY.Data.Migrations
 {
     [DbContext(typeof(SurveyDbContext))]
-    [Migration("20201111140806_Third")]
-    partial class Third
+    [Migration("20201207205950_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -553,7 +553,7 @@ namespace OGS.STV.SURVEY.Data.Migrations
                     b.ToTable("Contracts");
                 });
 
-            modelBuilder.Entity("OGS.STV.SURVEY.Data.Entities.Insurance", b =>
+            modelBuilder.Entity("OGS.STV.SURVEY.Data.Entities.ContractInsurance", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -563,6 +563,25 @@ namespace OGS.STV.SURVEY.Data.Migrations
                     b.Property<int?>("ContractId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("InsuranceId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContractId");
+
+                    b.HasIndex("InsuranceId");
+
+                    b.ToTable("ContractInsurances");
+                });
+
+            modelBuilder.Entity("OGS.STV.SURVEY.Data.Entities.Insurance", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
                     b.Property<int>("InsuranceOrder")
                         .HasColumnType("int");
 
@@ -570,8 +589,6 @@ namespace OGS.STV.SURVEY.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ContractId");
 
                     b.ToTable("Insurances");
 
@@ -660,6 +677,9 @@ namespace OGS.STV.SURVEY.Data.Migrations
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("CardNO")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("CityId")
                         .HasColumnType("int");
 
@@ -689,11 +709,15 @@ namespace OGS.STV.SURVEY.Data.Migrations
                         .HasForeignKey("SurveyUserId");
                 });
 
-            modelBuilder.Entity("OGS.STV.SURVEY.Data.Entities.Insurance", b =>
+            modelBuilder.Entity("OGS.STV.SURVEY.Data.Entities.ContractInsurance", b =>
                 {
-                    b.HasOne("OGS.STV.SURVEY.Data.Entities.Contract", null)
-                        .WithMany("Insurances")
+                    b.HasOne("OGS.STV.SURVEY.Data.Entities.Contract", "Contract")
+                        .WithMany("ContractInsurances")
                         .HasForeignKey("ContractId");
+
+                    b.HasOne("OGS.STV.SURVEY.Data.Entities.Insurance", "Insurance")
+                        .WithMany()
+                        .HasForeignKey("InsuranceId");
                 });
 
             modelBuilder.Entity("OGS.STV.SURVEY.Data.Entities.SurveyUser", b =>

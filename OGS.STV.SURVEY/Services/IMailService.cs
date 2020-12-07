@@ -11,6 +11,6 @@ namespace OGS.STV.SURVEY.Services
 {
     public interface IMailService
     {
-        Task<bool> SendMail(CancellationToken cancellationToken, MailRequestModel mailRequestModel, Contract contract);
+        Task<bool> SendMailASync(CancellationToken cancellationToken, MailRequestModel mailRequestModel, Contract contract);
     }
 }
