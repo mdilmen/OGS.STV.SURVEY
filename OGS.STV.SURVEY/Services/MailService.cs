@@ -70,9 +70,9 @@ namespace OGS.STV.SURVEY.Services
 
                 ToName = "Derya Uçunoğlu",
 
-                //ToEmailAddress = "mustafa.dilmen@oyakyatirim.com.tr",
+                ToEmailAddress = "mustafa.dilmen@oyakyatirim.com.tr",
                 //ToEmailAddress = "derya.ucunoglu@oyakgrupsigorta.com",
-                ToEmailAddress = "sisliterakki@oyakgrupsigorta.com",                
+                //ToEmailAddress = "sisliterakki@oyakgrupsigorta.com",                
 
                 PostType = "Anket Maili",
 

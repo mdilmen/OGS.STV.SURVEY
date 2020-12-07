@@ -17,18 +17,18 @@ namespace OGS.STV.SURVEY.Services
         public ValidationHttpClient(HttpClient client)
         {
             _client = client;
-            _client.BaseAddress = new Uri("http://www.stlmed.org/api/membership/check_id?wsdl");
+            _client.BaseAddress = new Uri("http://www.stlmed.org/api/membership/check_card");
             _client.Timeout = new TimeSpan(0, 0, 30);
             _client.DefaultRequestHeaders.Clear();
             _client.DefaultRequestHeaders.Accept.Add(
                     new MediaTypeWithQualityHeaderValue("application/json"));
         }
-        public async Task<bool> Validate(string tckno)
+        public async Task<bool> Validate(string cardNo)
         {
             try
             {
                 var encodedContent = new FormUrlEncodedContent(new List<KeyValuePair<string, string>>{
-                new KeyValuePair<string, string>("tckn", tckno)
+                new KeyValuePair<string, string>("card_no", cardNo)
                 });
                 var request = new HttpRequestMessage(HttpMethod.Post, "")
                 {
