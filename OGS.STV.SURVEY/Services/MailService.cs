@@ -23,16 +23,20 @@ namespace OGS.STV.SURVEY.Services
         }
         public async Task<bool> SendMailASync(CancellationToken cancellationToken, MailRequestModel mailRequestModel, Contract contract)
         {
-            //Thread.Sleep(10000);
+            bool result = false;
+
             try
             {
-                var token = await _client.GetToken();
-                var result = await _client.PostSendMail(cancellationToken, token, CreateMailRequest(contract));
+                await Task.Run(() =>
+                {
+                    var token = _client.GetToken(cancellationToken).GetAwaiter().GetResult();
+                    result = _client.PostSendMail(cancellationToken, token, CreateMailRequest(contract)).GetAwaiter().GetResult();
+                }
+                );
                 return result;
             }
             catch (Exception)
-            {
-                // do nothing 
+            {                
                 return false;
             }
         }
@@ -42,7 +46,7 @@ namespace OGS.STV.SURVEY.Services
             string subject = "";
             subject = contract.SurveyUser.FullName + " - ";
             foreach (var item in contract.ContractInsurances)
-            {                
+            {
                 subject += item.Insurance.Name + ", ";
             }
             subject = subject[0..^2];
@@ -51,14 +55,14 @@ namespace OGS.STV.SURVEY.Services
             string subjectHtml = "";
             subjectHtml = "<ul>";
             foreach (var item in contract.ContractInsurances)
-            {             
-                subjectHtml += "<li>" + item.Insurance.Name + "</li>";             
+            {
+                subjectHtml += "<li>" + item.Insurance.Name + "</li>";
             }
             subjectHtml += "</ul>";
             // HtmlBody
             string body = "";
             body = "<html><head></head><body><h4>"
-                + contract.SurveyUser.FullName + "</h4>"                
+                + contract.SurveyUser.FullName + "</h4>"
                 + contract.SurveyUser.CardNO + "</br>"
                 + contract.SurveyUser.TCNO + "</br>"
                 + contract.SurveyUser.BirthDate.ToShortDateString() + "</br>"
@@ -84,7 +88,7 @@ namespace OGS.STV.SURVEY.Services
                 ToName = _config["ContactString:ToName"],
 
                 ToEmailAddress = _config["ContactString:ToEmailAddress"],
-           
+
                 PostType = _config["ContactString:PostType"],
 
                 KeyId = _config["ContactString:KeyId"],

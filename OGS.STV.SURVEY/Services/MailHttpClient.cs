@@ -26,17 +26,16 @@ namespace OGS.STV.SURVEY.Services
             _client.DefaultRequestHeaders.Accept.Add(
                     new MediaTypeWithQualityHeaderValue("application/json"));
         }
-        public async Task<string> GetToken()
-        {
+        public async Task<string> GetToken(CancellationToken cancellationToken)
+        {         
             try
             {
                 var request = new HttpRequestMessage(HttpMethod.Post, "api/auth/login");
-                var serializedRequest = JsonConvert.SerializeObject(new TokenRequestModel() { UserName = "oyakyatirim_live_wsuser", Password = "oyak#y4tir1" });
-                //request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));                
+                var serializedRequest = JsonConvert.SerializeObject(new TokenRequestModel() { UserName = "oyakyatirim_live_wsuser", Password = "oyak#y4tir1" });         
                 request.Content = new StringContent(serializedRequest);
                 request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-                var response = await _client.SendAsync(request);
+                var response = await _client.SendAsync(request,cancellationToken);
                 response.EnsureSuccessStatusCode();
 
                 var tokenResponse = JsonConvert.DeserializeObject<TokenResponseModel>(await response.Content.ReadAsStringAsync());
@@ -49,8 +48,7 @@ namespace OGS.STV.SURVEY.Services
             }
         }
         public async Task<bool> PostSendMail(CancellationToken cancellationToken, string authToken,MailRequestModel mailRequest)
-        {
-            //InvoiceResponseModel invoice = new InvoiceResponseModel();
+        {           
             var serializedMailRequest = JsonConvert.SerializeObject(mailRequest);
 
             var request = new HttpRequestMessage(HttpMethod.Post, "api/post/PostHtml");
@@ -73,8 +71,7 @@ namespace OGS.STV.SURVEY.Services
             }
             catch (Exception ex)
             {             
-                throw new Exception($"UpdateInvoices Api failed {ex.Message}.");
-             
+                throw new Exception($"UpdateInvoices Api failed {ex.Message}.");             
             }
         }
     }
