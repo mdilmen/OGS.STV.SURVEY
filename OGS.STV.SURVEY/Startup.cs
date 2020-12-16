@@ -60,6 +60,7 @@ namespace OGS.STV.SURVEY
             app.UseStaticFiles();
             //app.UseNodeModules();
             app.UseRouting();
+            app.UseAuthentication();
             app.UseEndpoints(cfg =>
             {
                 cfg.MapControllerRoute("Fallback",

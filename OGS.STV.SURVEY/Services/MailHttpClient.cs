@@ -1,13 +1,8 @@
 ﻿using Newtonsoft.Json;
 using OGS.STV.SURVEY.Http;
-using RestSharp;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 

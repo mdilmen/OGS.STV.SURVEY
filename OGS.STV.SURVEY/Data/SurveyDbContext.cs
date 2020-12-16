@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using OGS.STV.SURVEY.Data.Entities;
 using System;
 using System.Collections.Generic;
@@ -8,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace OGS.STV.SURVEY.Data
 {
-    public class SurveyDbContext : DbContext
+    public class SurveyDbContext : IdentityDbContext<IdentityUser>
     {
         public SurveyDbContext(DbContextOptions<SurveyDbContext> options) : base(options)
         {
