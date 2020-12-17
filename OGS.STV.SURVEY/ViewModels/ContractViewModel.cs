@@ -10,7 +10,7 @@ namespace OGS.STV.SURVEY.ViewModels
 {
     public class ContractViewModel
     {
-        [RegularExpression(@"^(?=.{16,16}$)(?!.*?(.)\1{7})[A-Za-z0-9]+$", ErrorMessage = "Lütfen geçerli bir Kart No giriniz!")]
+        [RegularExpression(@"^(?=.{16,16}$)(?!.*?(.)\1{7})[0-9]+$", ErrorMessage = "Lütfen geçerli bir Kart No giriniz!")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Bu alan gereklidir!")]
         [MinLength(16, ErrorMessage = "Kart No 16 hane olmalı")]
         [MaxLength(16, ErrorMessage = "Kart No 16 hane olmalı")]
@@ -19,7 +19,7 @@ namespace OGS.STV.SURVEY.ViewModels
         public string CardNo { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Bu alan gereklidir!")]
-        [RegularExpression(@"^(?=.{11,11}$)(?!.*?(.)\1{5})[A-Za-z0-9]+$", ErrorMessage = "Lütfen geçerli bir Tc No giriniz!")]
+        [RegularExpression(@"^(?=.{11,11}$)(?!.*?(.)\1{5})[0-9]+$", ErrorMessage = "Lütfen geçerli bir Tc No giriniz!")]
         [MinLength(11, ErrorMessage = "Tc No 11 hane olmalı")]
         [MaxLength(11, ErrorMessage = "Tc No 11 hane olmalı")]
         public string TCNO { get; set; }

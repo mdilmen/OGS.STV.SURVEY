@@ -1,7 +1,7 @@
 ﻿{
   "ConnectionStrings": {
-    //    "SurveyConnectionString": "server=.\\SQLExpress;Database=Ogs.Stv.Survey;Integrated Security=true;MultipleActiveResultSets=true;"
-    "SurveyConnectionString": "server=10.65.100.42;Database=Ogs.Stv.Survey;User Id=sa;password=Sh99m5ayneS2003;Trusted_Connection=False;MultipleActiveResultSets=true;"
+    "SurveyConnectionString": "server=.\\SQLExpress;Database=Ogs.Stv.Survey;Integrated Security=true;MultipleActiveResultSets=true;"
+    //"SurveyConnectionString": "server=10.65.100.42;Database=Ogs.Stv.Survey;User Id=sa;password=Sh99m5ayneS2003;Trusted_Connection=False;MultipleActiveResultSets=true;"
   },
   "ContactString": {
     "FromName": "Oyak Yatırım",

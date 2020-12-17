@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -30,14 +31,22 @@ namespace OGS.STV.SURVEY
             services.AddHttpClient<ValidationHttpClient>();
             services.AddHttpClient<MailHttpClient>();
             services.AddScoped<IMailService, MailService>();
+            services.AddScoped<IReportService, ReportService>();
+            services.AddTransient<SurveySeeder>();
             services.AddScoped<ISurveyRepository, SurveyRepository>();
             services.AddDbContext<SurveyDbContext>(cfg =>
             {
                 cfg.UseSqlServer(_config.GetConnectionString("SurveyConnectionString"));
             });
+            services.AddDefaultIdentity<IdentityUser>(cfg =>
+            {
+                cfg.User.RequireUniqueEmail = true;
+            })                
+                .AddEntityFrameworkStores<SurveyDbContext>();
             services.AddControllersWithViews()
                 .AddRazorRuntimeCompilation()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,11 +70,13 @@ namespace OGS.STV.SURVEY
             //app.UseNodeModules();
             app.UseRouting();
             app.UseAuthentication();
+            app.UseAuthorization();
             app.UseEndpoints(cfg =>
             {
                 cfg.MapControllerRoute("Fallback",
                     "{controller}/{action}/{id?}",
                     new { controller = "App", action = "Index" });
+                cfg.MapRazorPages();
             });
         }
     }

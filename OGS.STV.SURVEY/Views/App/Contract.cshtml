@@ -18,11 +18,11 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group mb-1">
-                <label asp-for="CardNo">Şişli Terakki Kart No</label>
+                <p class="text-muted">OYAK Grup Sigorta ve Şişli Terakki Lisesi Mezunları Derneği  işbirliğine özel fırsatlar için lütfen doldurun.</p>
+                <label asp-for="CardNo">ŞTLMed Kart No</label>
                 <input asp-for="CardNo" class="form-control" />
                 <span class="text-muted small">ŞTL Kart numaranızı <a href="http://www.stlmed.org" target="_blank">www.stlmed.org</a> adresinden üye girişi yaparak öğrenebilirsiniz.</span><br />
                 <span asp-validation-for="CardNo" class="text-danger"></span>
-
             </div>
             <div class="form-group mb-1">
                 @*<p class="text-muted">*Size daha iyi bir hizmet sunabilmek için bilgileriniz OYAK Grup Sigorta tarafından kaydedilecektir.</p>*@

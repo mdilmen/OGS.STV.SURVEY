@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
     // Show Info Modal
-    $('#infoModal').modal("show");
+    //$('#infoModal').modal("show");
 
     // Phone Number
     $('#Email').inputmask("email");

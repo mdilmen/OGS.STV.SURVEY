@@ -15,6 +15,8 @@ namespace OGS.STV.SURVEY.Data
         City GetCity(int id);
         List<Insurance> GetAllInsurances();
         List<Insurance> GetInsurances(List<int> insuranceIdList);
+        Contract GetContract(int id);
+        List<Report> GetReports();
 
     }
 }

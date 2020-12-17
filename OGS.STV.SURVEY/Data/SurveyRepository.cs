@@ -44,5 +44,15 @@ namespace OGS.STV.SURVEY.Data
         {
             return _context.Insurances.Where(i => insuranceIdList.Contains(i.Id)).OrderBy(i=> i.InsuranceOrder).ToList();
         }
+
+        public Contract GetContract(int id)
+        {
+            return _context.Contracts.Where(c => c.Id == id).FirstOrDefault();
+        }
+
+        public List<Report> GetReports()
+        {
+            return _context.Reports.OrderByDescending(r => r.Id).ToList();
+        }
     }
 }

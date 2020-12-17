@@ -21,6 +21,7 @@ namespace OGS.STV.SURVEY.Data
         public DbSet<Contract> Contracts { get; set; }
         public DbSet<SurveyUser> SurveyUsers { get; set; }
         public DbSet<ContractInsurance> ContractInsurances { get; set; }
+        public DbSet<Report> Reports { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
