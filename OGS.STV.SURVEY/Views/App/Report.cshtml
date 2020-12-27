@@ -1,4 +1,4 @@
-﻿@model ReportViewModel
+﻿@model List<ReportViewModel>
 @{
     ViewBag.Title = "Rapor";
 }
@@ -19,7 +19,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var info in Model.Infos)
+            @foreach (var info in Model)
             {
             <tr>
                 <th scope="row">@info.Id</th>

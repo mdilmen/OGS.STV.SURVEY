@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -24,13 +25,17 @@ namespace OGS.STV.SURVEY.Controllers
         private readonly IMailService _mailService;
         private readonly IReportService _reportService;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly IMapper _mapper;
 
-        public AppController(ISurveyRepository repository, IMailService mailService,IReportService reportService, SignInManager<IdentityUser> signInManager)
+        public AppController(ISurveyRepository repository, IMailService mailService,
+                                IReportService reportService, SignInManager<IdentityUser> signInManager,
+                                IMapper mapper)
         {
             _repository = repository;
             _mailService = mailService;
             _reportService = reportService;
             _signInManager = signInManager;
+            _mapper = mapper;
         }
         public IActionResult Index()
         {
@@ -119,37 +124,39 @@ namespace OGS.STV.SURVEY.Controllers
             if (_signInManager.IsSignedIn(User))
             {
                 List<Report> reports = _repository.GetReports();
-                ReportViewModel viewModel = MapReportToModel(reports);
+                //ReportViewModel viewModel = MapReportToModel(reports); // use AutoMapper instead
+                List<ReportViewModel> models = _mapper.Map<List<ReportViewModel>>(reports);
                 ViewBag.Title = "Success";
-                return View(viewModel);
+                return View(models);
             }
             else 
             {
                 return RedirectToAction("Login", "Account");
             }
         }
-        private ReportViewModel MapReportToModel(List<Report> reports)
-        {
-            ReportViewModel viewModel = new ReportViewModel();
-            foreach (var report in reports)
-            {
-                Info info = new Info()
-                {
-                    CardNO = report.CardNO,
-                    City = report.City,
-                    ContractId = report.ContractId,
-                    CreateDate = report.CreateDate,
-                    Email = report.Email,
-                    FullName = report.FullName,
-                    Id = report.Id,
-                    InsuranceList = report.InsuranceList,
-                    MailSend = report.MailSend,
-                    Phone = report.Phone,
-                    TcNO = report.TCNO
-                };
-                viewModel.Infos.Add(info);
-            }
-            return viewModel;
-        }
+        // use AutoMapper instead
+        //private ReportViewModel MapReportToModel(List<Report> reports)
+        //{
+        //    ReportViewModel viewModel = new ReportViewModel();
+        //    foreach (var report in reports)
+        //    {
+        //        Info info = new Info()
+        //        {
+        //            CardNO = report.CardNO,
+        //            City = report.City,
+        //            ContractId = report.ContractId,
+        //            CreateDate = report.CreateDate,
+        //            Email = report.Email,
+        //            FullName = report.FullName,
+        //            Id = report.Id,
+        //            InsuranceList = report.InsuranceList,
+        //            MailSend = report.MailSend,
+        //            Phone = report.Phone,
+        //            TcNO = report.TCNO
+        //        };
+        //        viewModel.Infos.Add(info);
+        //    }
+        //    return viewModel;
+        //}
     }
 }

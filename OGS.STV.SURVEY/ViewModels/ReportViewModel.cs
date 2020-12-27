@@ -8,14 +8,6 @@ namespace OGS.STV.SURVEY.ViewModels
 {
     public class ReportViewModel
     {
-        public ReportViewModel()
-        {
-            Infos = new List<Info>();
-        }
-        public List<Info> Infos { get; set; }
-    }
-    public class Info
-    {
         public int Id { get; set; }
         public int ContractId { get; set; }
         public string CreateDate { get; set; }
@@ -27,7 +19,5 @@ namespace OGS.STV.SURVEY.ViewModels
         public string Phone { get; set; }
         public string InsuranceList { get; set; }
         public string MailSend { get; set; }
-
-
     }
 }

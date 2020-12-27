@@ -27,19 +27,28 @@ namespace OGS.STV.SURVEY.Services
 
             try
             {
-                await Task.Run(() =>
-                {
-                    var token = _client.GetToken(cancellationToken).GetAwaiter().GetResult();
-                    result = _client.PostSendMail(cancellationToken, token, CreateMailRequest(contract)).GetAwaiter().GetResult();
-                }
-                );
+                //await Task.Run(() =>
+                //{
+                //    Thread.Sleep(5000);
+                //    var token = _client.GetToken(cancellationToken).GetAwaiter().GetResult();
+                //    result = _client.PostSendMail(cancellationToken, token, CreateMailRequest(contract)).GetAwaiter().GetResult();
+                //}
+                //);
+
+
+                var token = await _client.GetToken(cancellationToken);
+                result = await _client.PostSendMail(cancellationToken, token, CreateMailRequest(contract));
+
+
                 return result;
             }
+
             catch (Exception)
-            {                
+            {
                 return false;
             }
         }
+
         public MailRequestModel CreateMailRequest(Contract contract)
         {
             //Subject 

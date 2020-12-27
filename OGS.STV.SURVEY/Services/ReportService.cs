@@ -26,7 +26,7 @@ namespace OGS.STV.SURVEY.Services
             var result = _repository.SaveAll();
 
             return result;
-        }
+        }  
         private static Report GenerateReport(Contract contract)
         {
             SurveyUser surveyUser = contract.SurveyUser;
