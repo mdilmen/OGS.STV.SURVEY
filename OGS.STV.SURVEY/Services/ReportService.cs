@@ -1,5 +1,8 @@
-﻿using OGS.STV.SURVEY.Data;
+﻿using AutoMapper;
+using Microsoft.Extensions.Logging;
+using OGS.STV.SURVEY.Data;
 using OGS.STV.SURVEY.Data.Entities;
+using OGS.STV.SURVEY.ViewModels;
 using System;
 using System.Collections.Generic;
 
@@ -12,9 +15,14 @@ namespace OGS.STV.SURVEY.Services
     public class ReportService : IReportService
     {
         private readonly ISurveyRepository _repository;
-        public ReportService(ISurveyRepository repository)
+        private readonly ILogger<ReportService> _logger;
+        private readonly IMapper _mapper;
+
+        public ReportService(ISurveyRepository repository, ILogger<ReportService> logger, IMapper mapper)
         {
             _repository = repository;
+            _logger = logger;
+            _mapper = mapper;
         }
         public bool InsertReport(int contractId)
         {
@@ -40,7 +48,7 @@ namespace OGS.STV.SURVEY.Services
                 FullName = surveyUser.FullName,
                 InsuranceList = GenerateInsuranceList(contract.ContractInsurances),
                 MailSend = contract.MailSendStatus.ToString(),
-                Phone = surveyUser.Phone     ,
+                Phone = surveyUser.Phone,
                 TCNO = surveyUser.TCNO
     };
             return report;
@@ -54,6 +62,22 @@ namespace OGS.STV.SURVEY.Services
             }
             
             return result[0..^2];
+        }
+
+        public List<ReportViewModel> GetReportViewModels()
+        {
+            List<ReportViewModel> models = new List<ReportViewModel>();
+            try
+            {
+                List<Report> reports = _repository.GetReports();
+
+                models = _mapper.Map<List<ReportViewModel>>(reports);
+            }
+            catch (Exception)
+            {
+                _logger.LogWarning("Could not get reports.");                
+            }
+            return models;
         }
     }
 }

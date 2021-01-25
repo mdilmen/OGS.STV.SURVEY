@@ -1,4 +1,6 @@
-﻿using OGS.STV.SURVEY.Data.Entities;
+﻿using Microsoft.Extensions.Logging;
+using OGS.STV.SURVEY.Data.Entities;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +13,12 @@ namespace OGS.STV.SURVEY.Data
     public class SurveyRepository : ISurveyRepository
     {
         private readonly SurveyDbContext _context;
+        private readonly ILogger<SurveyRepository> _logger;
 
-        public SurveyRepository(SurveyDbContext context)
+        public SurveyRepository(SurveyDbContext context, ILogger<SurveyRepository> logger)
         {
             _context = context;
+            _logger = logger;
         }
         public bool SaveAll()
         {
@@ -52,6 +56,7 @@ namespace OGS.STV.SURVEY.Data
 
         public List<Report> GetReports()
         {
+            _logger.LogInformation("Some one is calling the repository to get the Reports..");
             return _context.Reports.OrderByDescending(r => r.Id).ToList();
         }
     }

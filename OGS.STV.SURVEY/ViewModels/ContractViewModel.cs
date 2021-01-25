@@ -15,7 +15,7 @@ namespace OGS.STV.SURVEY.ViewModels
         [MinLength(16, ErrorMessage = "Kart No 16 hane olmalı")]
         [MaxLength(16, ErrorMessage = "Kart No 16 hane olmalı")]
         
-        [Remote(action: "IsValidCardNo",controller: "ValidationCardNo",HttpMethod ="POST", ErrorMessage = "Card No is not valid.")]        
+        //[Remote(action: "IsValidCardNo",controller: "ValidationCardNo",HttpMethod ="POST", ErrorMessage = "Card No is not valid.")]        
         public string CardNo { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Bu alan gereklidir!")]

@@ -14,5 +14,14 @@
     "KeyId": "",
     "CustomParams": ""
     //ToEmailAddress = "sisliterakki@oyakgrupsigorta.com"  
+  },
+  "SeriLog": {
+    "MinimumLevel": {
+      "Default": "Warning",
+      "Override": {
+        "Microsoft.AspNetCore": "Warning",
+        "Microsoft": "Warning"
+      }
+    }
   }
 }

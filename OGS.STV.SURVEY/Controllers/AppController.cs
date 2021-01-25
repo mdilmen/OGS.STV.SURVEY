@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Logging;
 using OGS.STV.SURVEY.Data;
 using OGS.STV.SURVEY.Data.Entities;
 using OGS.STV.SURVEY.Data.Enums;
@@ -11,8 +11,8 @@ using OGS.STV.SURVEY.Services;
 using OGS.STV.SURVEY.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -26,20 +26,28 @@ namespace OGS.STV.SURVEY.Controllers
         private readonly IReportService _reportService;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IMapper _mapper;
+        private readonly ILogger<AppController> _logger;
 
         public AppController(ISurveyRepository repository, IMailService mailService,
                                 IReportService reportService, SignInManager<IdentityUser> signInManager,
-                                IMapper mapper)
+                                IMapper mapper, ILogger<AppController> logger)
         {
             _repository = repository;
             _mailService = mailService;
             _reportService = reportService;
             _signInManager = signInManager;
             _mapper = mapper;
+            _logger = logger;
         }
         public IActionResult Index()
         {
+            _logger.LogInformation("First log.");
+
+//            throw new Exception();
+
+
             return RedirectToAction("Contract", "App");
+
         }
 
         [HttpGet("Contract")]
@@ -97,12 +105,12 @@ namespace OGS.STV.SURVEY.Controllers
                     };
                     contract.ContractInsurances.Add(contractInsurance);
                 }
-                
+
                 bool mailSend = await _mailService.SendMailASync(_cancellationTokenSource.Token, new Http.MailRequestModel(), contract);
                 contract.MailSendStatus = mailSend ? MailSendStatus.MailSend : MailSendStatus.MailNotSend;
 
                 _repository.AddEntity(contract);
-                
+
                 _repository.SaveAll();
 
                 _reportService.InsertReport(contract.Id);
@@ -117,46 +125,42 @@ namespace OGS.STV.SURVEY.Controllers
             ViewBag.Title = "Sonuç";
             return View();
         }
-        
+
         [HttpGet("Report")]
         public IActionResult Report()
         {
             if (_signInManager.IsSignedIn(User))
             {
+                var userId = User.Claims.FirstOrDefault(u => u.Type == "sub")?.Value;
+                _logger.LogInformation("{UserName} - ({UserId}) is about to get the report. {Claims}",
+                    User.Identity.Name, userId, User.Claims);
+
                 List<Report> reports = _repository.GetReports();
-                //ReportViewModel viewModel = MapReportToModel(reports); // use AutoMapper instead
+
                 List<ReportViewModel> models = _mapper.Map<List<ReportViewModel>>(reports);
                 ViewBag.Title = "Success";
                 return View(models);
             }
-            else 
+            else
             {
                 return RedirectToAction("Login", "Account");
             }
         }
-        // use AutoMapper instead
-        //private ReportViewModel MapReportToModel(List<Report> reports)
-        //{
-        //    ReportViewModel viewModel = new ReportViewModel();
-        //    foreach (var report in reports)
-        //    {
-        //        Info info = new Info()
-        //        {
-        //            CardNO = report.CardNO,
-        //            City = report.City,
-        //            ContractId = report.ContractId,
-        //            CreateDate = report.CreateDate,
-        //            Email = report.Email,
-        //            FullName = report.FullName,
-        //            Id = report.Id,
-        //            InsuranceList = report.InsuranceList,
-        //            MailSend = report.MailSend,
-        //            Phone = report.Phone,
-        //            TcNO = report.TCNO
-        //        };
-        //        viewModel.Infos.Add(info);
-        //    }
-        //    return viewModel;
-        //}
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            ErrorViewModel model = new ErrorViewModel()
+            { 
+                RequestId = HttpContext.TraceIdentifier 
+            };
+            var exceptionPathFeature = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
+            var ex = exceptionPathFeature?.Error;
+            if (ex.Data.Contains("API Route"))
+            {
+                model.ApiRoute = ex.Data["API Route"].ToString();
+                model.ApiStatus = ex.Data["API Status"].ToString();
+            }
+            return View(model);
+        }
     }
 }

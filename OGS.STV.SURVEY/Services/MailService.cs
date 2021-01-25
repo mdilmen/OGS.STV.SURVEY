@@ -1,11 +1,8 @@
-﻿using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using OGS.STV.SURVEY.Data.Entities;
 using OGS.STV.SURVEY.Http;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,38 +12,28 @@ namespace OGS.STV.SURVEY.Services
     {
         private readonly MailHttpClient _client;
         private readonly IConfiguration _config;
+        private readonly ILogger<MailService> _logger;
 
-        public MailService(MailHttpClient client, IConfiguration config)
+        public MailService(MailHttpClient client, IConfiguration config,ILogger<MailService> logger)
         {
             _client = client;
             _config = config;
+            _logger = logger;
         }
         public async Task<bool> SendMailASync(CancellationToken cancellationToken, MailRequestModel mailRequestModel, Contract contract)
         {
             bool result = false;
-
             try
             {
-                //await Task.Run(() =>
-                //{
-                //    Thread.Sleep(5000);
-                //    var token = _client.GetToken(cancellationToken).GetAwaiter().GetResult();
-                //    result = _client.PostSendMail(cancellationToken, token, CreateMailRequest(contract)).GetAwaiter().GetResult();
-                //}
-                //);
-
-
-                var token = await _client.GetToken(cancellationToken);
+                var token = await _client.GetToken(cancellationToken);                
                 result = await _client.PostSendMail(cancellationToken, token, CreateMailRequest(contract));
-
-
-                return result;
             }
 
-            catch (Exception)
+            catch (Exception ex)
             {
-                return false;
+                _logger.LogWarning($"Mail could not be send : {mailRequestModel.FromName} - exception : {ex.Message}");             
             }
+            return result;
         }
 
         public MailRequestModel CreateMailRequest(Contract contract)

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using OGS.STV.SURVEY.Http;
 using System;
 using System.Net.Http;
@@ -11,10 +12,12 @@ namespace OGS.STV.SURVEY.Services
     public class MailHttpClient
     {
         private readonly HttpClient _client;
+        private readonly ILogger<MailHttpClient> _logger;
 
-        public MailHttpClient(HttpClient client)
+        public MailHttpClient(HttpClient client, ILogger<MailHttpClient> logger)
         {
             _client = client;
+            _logger = logger;
             _client.BaseAddress = new Uri("https://api.relateddigital.com/resta/api");
             _client.Timeout = new TimeSpan(0, 0, 30);
             _client.DefaultRequestHeaders.Clear();
@@ -22,7 +25,7 @@ namespace OGS.STV.SURVEY.Services
                     new MediaTypeWithQualityHeaderValue("application/json"));
         }
         public async Task<string> GetToken(CancellationToken cancellationToken)
-        {         
+        {
             try
             {
                 var request = new HttpRequestMessage(HttpMethod.Post, "api/auth/login");
@@ -31,17 +34,23 @@ namespace OGS.STV.SURVEY.Services
                 request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
                 var response = await _client.SendAsync(request,cancellationToken);
-                response.EnsureSuccessStatusCode();
+                if(!response.IsSuccessStatusCode)
+                {
+                    var ex = new Exception("API Failure");
+                    ex.Data.Add("API Route", $"POST {request.RequestUri}");
+                    ex.Data.Add("API Status", (int)response.StatusCode);
+                    _logger.LogWarning("API Error when calling {APIRoute} : {APIStatus}", $"Get {request.RequestUri}", (int)response.StatusCode);
+                    throw ex;
+                }
 
                 var tokenResponse = JsonConvert.DeserializeObject<TokenResponseModel>(await response.Content.ReadAsStringAsync());
                 return tokenResponse.ServiceTicket;
-            }
+        }
             catch (Exception ex)
             {
-                throw new Exception($"GetToken Api failed {ex.Message}.");
-                //throw;
+                throw new Exception($"GetToken Api failed {ex.Message}.");                                
             }
-        }
+}
         public async Task<bool> PostSendMail(CancellationToken cancellationToken, string authToken,MailRequestModel mailRequest)
         {           
             var serializedMailRequest = JsonConvert.SerializeObject(mailRequest);
@@ -59,10 +68,6 @@ namespace OGS.STV.SURVEY.Services
                 response.EnsureSuccessStatusCode();
                 var mailResponse = JsonConvert.DeserializeObject<MailResponseModel>(await response.Content.ReadAsStringAsync());
                 return mailResponse.Success;
-            }
-            catch (OperationCanceledException ocException)
-            {                
-                return false;
             }
             catch (Exception ex)
             {             

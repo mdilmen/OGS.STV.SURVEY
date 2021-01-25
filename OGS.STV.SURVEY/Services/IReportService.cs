@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OGS.STV.SURVEY.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,5 +10,7 @@ namespace OGS.STV.SURVEY.Services
     public interface IReportService
     {
         bool InsertReport(int contractId);
+        List<ReportViewModel> GetReportViewModels();
+
     }
 }

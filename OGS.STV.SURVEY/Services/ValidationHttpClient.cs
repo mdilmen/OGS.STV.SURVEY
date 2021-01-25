@@ -59,6 +59,7 @@ namespace OGS.STV.SURVEY.Services
             }
             catch (Exception ex)
             {
+                
                 return false;
             }
         }
